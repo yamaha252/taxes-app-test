@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -16,6 +17,9 @@ abstract class TestCase extends BaseTestCase
      */
     protected $entityManager;
 
+    /**
+     * @inheritDoc
+     */
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
@@ -23,17 +27,21 @@ abstract class TestCase extends BaseTestCase
         $this->truncateSchema();
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
         parent::setUp();
         $this->applyFixtures();
     }
 
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
+    /**
+     * Connect to the database and return EntityManager
+     *
+     * @return EntityManagerInterface
+     * @throws \Doctrine\ORM\ORMException
+     */
     protected function getEntityManager(): EntityManagerInterface
     {
         $config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../src/Model']);
@@ -49,13 +57,23 @@ abstract class TestCase extends BaseTestCase
         return EntityManager::create($connection, $config);
     }
 
-    protected function truncateSchema() {
+    /**
+     * Drop and create database schema
+     *
+     * @throws \Doctrine\ORM\Tools\ToolsException
+     */
+    protected function truncateSchema()
+    {
         $schema = new SchemaTool($this->entityManager);
         $schema->dropSchema($this->entityManager->getMetadataFactory()->getAllMetadata());
         $schema->createSchema($this->entityManager->getMetadataFactory()->getAllMetadata());
     }
 
-    protected function applyFixtures() {
+    /**
+     * Apply described in `getFixtures` fixtures to the database
+     */
+    protected function applyFixtures()
+    {
         $loader = new Loader();
         foreach (static::getFixtures() as $fixture) {
             $loader->addFixture($fixture);
@@ -67,5 +85,8 @@ abstract class TestCase extends BaseTestCase
         $executor->execute($loader->getFixtures());
     }
 
+    /**
+     * @return AbstractFixture[]
+     */
     abstract protected static function getFixtures(): iterable;
 }
