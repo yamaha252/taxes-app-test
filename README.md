@@ -17,7 +17,7 @@ The software should have the following features:
 
 **Run using Docker**
 
-```
+```bash
 $ docker-compose up -d mysql
 $ docker-compose up app-tests
 ```
@@ -25,21 +25,24 @@ $ docker-compose up app-tests
 **On local environment**
 
 Prepare MySQL database with enabled `mysql_native_password` authentication.
-Check default connection params in `tests/TestCase.php` or set your own in environment variables
-```
-$ export DB_HOST=172.17.0.2
-$ export DB_PORT=3306
-$ export DB_USER=root
-$ export DB_PASSWORD=12345
-$ export DB_NAME=taxes-app
+Check default connection params in `config.php` or set your own creating `config-local.php` file
+```php
+<?php
+
+return [
+    'connection' => [
+        'driver' => 'pdo_mysql',
+        'host' => 'localhost',
+        'port' => 3306,
+        'user' => 'root',
+        'password' => '',
+        'dbname' => 'taxes-app',
+    ]
+];
 ```
 Install composer packages and run the tests.
-```
+```bash
 $ composer install
 $ composer test
 ```
 
-Running tests with specific connection settings
-```
-(export DB_HOST=172.17.0.2; export DB_USER=root; export DB_PASSWORD=12345; export DB_NAME=taxes-app; composer test)
-```

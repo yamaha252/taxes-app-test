@@ -4,10 +4,8 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Tools\Setup;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -18,12 +16,18 @@ abstract class TestCase extends BaseTestCase
     protected $entityManager;
 
     /**
-     * @inheritDoc
+     * TestCase constructor.
+     * @param null $name
+     * @param array $data
+     * @param string $dataName
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Tools\ToolsException
+     * @throws \Exception\UndefinedConfigParam
      */
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->entityManager = $this->getEntityManager();
+        $this->entityManager = Connection::getEntityManager();
         $this->truncateSchema();
     }
 
@@ -34,27 +38,6 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         $this->applyFixtures();
-    }
-
-    /**
-     * Connect to the database and return EntityManager
-     *
-     * @return EntityManagerInterface
-     * @throws \Doctrine\ORM\ORMException
-     */
-    protected function getEntityManager(): EntityManagerInterface
-    {
-        $config = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../src/Model']);
-        $config->setAutoGenerateProxyClasses(true);
-        $connection = array(
-            'driver' => getenv('DB_DRIVER') ?: 'pdo_mysql',
-            'host' => getenv('DB_HOST') ?: 'localhost',
-            'port' => getenv('DB_PORT') ?: 3306,
-            'user' => getenv('DB_USER') ?: 'root',
-            'password' => getenv('DB_PASSWORD') ?: '',
-            'dbname' => getenv('DB_NAME') ?: 'taxes-app',
-        );
-        return EntityManager::create($connection, $config);
     }
 
     /**

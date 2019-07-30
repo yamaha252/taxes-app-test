@@ -13,4 +13,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
+COPY docker/config-local.php ./config-local.php
+
 RUN composer install
