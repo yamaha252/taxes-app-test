@@ -25,7 +25,6 @@ class Connection
         if (static::$entityManager === null) {
             $connectionParams = Config::get('connection');
             $config = Setup::createAnnotationMetadataConfiguration(static::MODELS_PATHS);
-            $config->setAutoGenerateProxyClasses(true);
             return static::$entityManager = EntityManager::create($connectionParams, $config);
         }
 
