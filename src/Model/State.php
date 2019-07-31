@@ -40,6 +40,11 @@ class State
      */
     protected $counties;
 
+    /**
+     * @var StateTaxData Information of state taxes
+     */
+    protected $taxData;
+
 
     /**
      * Constructor
@@ -141,5 +146,29 @@ class State
     public function getCounties(): Collection
     {
         return $this->counties;
+    }
+
+    /**
+     * Get tax information.
+     *
+     * @return StateTaxData
+     */
+    public function getTaxData(): StateTaxData
+    {
+        return $this->taxData;
+    }
+
+    /**
+     * Set tax information.
+     *
+     * @param StateTaxData $data
+     *
+     * @return State
+     */
+    public function setTaxData(StateTaxData $data)
+    {
+        $this->taxData = $data;
+
+        return $this;
     }
 }

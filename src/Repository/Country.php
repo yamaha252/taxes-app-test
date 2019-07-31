@@ -30,9 +30,9 @@ class Country extends EntityRepository
             ->getQuery();
 
         $result = $query->getArrayResult();
+        $result = array_column($result, null, 'countryId');
         return array_map(function (array $item) {
             $result = new CountryTaxData;
-            $result->countryId = (int)$item['countryId'];
             $result->averageTaxRate = (float)$item['averageTaxRate'];
             $result->overallTaxAmount = (float)$item['overallTaxAmount'];
             return $result;

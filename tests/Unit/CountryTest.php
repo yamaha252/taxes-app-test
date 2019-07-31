@@ -32,11 +32,15 @@ class CountryTest extends \TestCase
 
         $this->assertCount(2, $data);
 
-        $this->assertSame((float)(0.2 + 0.25 + 0.18 + 0.1) / 5, $data[0]->averageTaxRate);
-        $this->assertSame((float)200 + 180 + 320 + 99, $data[0]->overallTaxAmount);
+        $model = $this->getModel('Andorra');
+        $item = $data[$model->getId()];
+        $this->assertSame((float)(0.2 + 0.25 + 0.18 + 0.1) / 5, $item->averageTaxRate);
+        $this->assertSame((float)200 + 180 + 320 + 99, $item->overallTaxAmount);
 
-        $this->assertSame((float)(0.2 + 0.25 + 0.18) / 3, $data[1]->averageTaxRate);
-        $this->assertSame((float)765.77 + 2 + 11.1, $data[1]->overallTaxAmount);
+        $model = $this->getModel('Monaco');
+        $item = $data[$model->getId()];
+        $this->assertSame((float)(0.2 + 0.25 + 0.18) / 3, $item->averageTaxRate);
+        $this->assertSame((float)765.77 + 2 + 11.1, $item->overallTaxAmount);
     }
 
     public function testAverageTaxRate()

@@ -28,9 +28,9 @@ class State extends EntityRepository
             ->getQuery();
 
         $result = $query->getArrayResult();
+        $result = array_column($result, null, 'stateId');
         return array_map(function (array $item) {
             $result = new StateTaxData;
-            $result->stateId = (int)$item['stateId'];
             $result->overallTaxAmount = (float)$item['overallTaxAmount'];
             $result->averageTaxAmount = (float)$item['averageTaxAmount'];
             $result->averageTaxRate = (float)$item['averageTaxRate'];

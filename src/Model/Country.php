@@ -35,6 +35,11 @@ class Country
     protected $states;
 
     /**
+     * @var CountryTaxData Information of country taxes
+     */
+    protected $taxData;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -110,5 +115,29 @@ class Country
     public function getStates(): Collection
     {
         return $this->states;
+    }
+
+    /**
+     * Get tax information.
+     *
+     * @return CountryTaxData
+     */
+    public function getTaxData(): CountryTaxData
+    {
+        return $this->taxData;
+    }
+
+    /**
+     * Set tax information.
+     *
+     * @param CountryTaxData $data
+     *
+     * @return Country
+     */
+    public function setTaxData(CountryTaxData $data)
+    {
+        $this->taxData = $data;
+
+        return $this;
     }
 }

@@ -19,13 +19,12 @@ The software should have the following features:
 
 Launch service
 ```bash
-$ docker-compose up -d mysql
-$ docker-compose up app
+$ docker-compose up -d
 ```
 
 Run tests
 ```bash
-$ docker-compose run app composer test
+$ docker-compose run api composer test
 ```
 
 **On local environment**

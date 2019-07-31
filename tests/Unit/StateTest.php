@@ -32,17 +32,23 @@ class StateTest extends \TestCase
 
         $this->assertCount(3, $data);
 
-        $this->assertSame((float)200 + 180 + 320, $data[0]->overallTaxAmount);
-        $this->assertSame((float)(200 + 180 + 320) / 3, $data[0]->averageTaxAmount);
-        $this->assertSame((float)(0.2 + 0.25 + 0.18) / 3, $data[0]->averageTaxRate);
+        $model = $this->getModel('State 1');
+        $item = $data[$model->getId()];
+        $this->assertSame((float)200 + 180 + 320, $item->overallTaxAmount);
+        $this->assertSame((float)(200 + 180 + 320) / 3, $item->averageTaxAmount);
+        $this->assertSame((float)(0.2 + 0.25 + 0.18) / 3, $item->averageTaxRate);
 
-        $this->assertSame((float)99, $data[1]->overallTaxAmount);
-        $this->assertSame((float)99 / 2, $data[1]->averageTaxAmount);
-        $this->assertSame((float)0.1 / 2, $data[1]->averageTaxRate);
+        $model = $this->getModel('State 2');
+        $item = $data[$model->getId()];
+        $this->assertSame((float)99, $item->overallTaxAmount);
+        $this->assertSame((float)99 / 2, $item->averageTaxAmount);
+        $this->assertSame((float)0.1 / 2, $item->averageTaxRate);
 
-        $this->assertSame((float)765.77 + 2 + 11.1, $data[2]->overallTaxAmount);
-        $this->assertSame((float)(765.77 + 2 + 11.1) / 3, $data[2]->averageTaxAmount);
-        $this->assertSame((float)(0.2 + 0.25 + 0.18) / 3, $data[2]->averageTaxRate);
+        $model = $this->getModel('State 3');
+        $item = $data[$model->getId()];
+        $this->assertSame((float)765.77 + 2 + 11.1, $item->overallTaxAmount);
+        $this->assertSame((float)(765.77 + 2 + 11.1) / 3, $item->averageTaxAmount);
+        $this->assertSame((float)(0.2 + 0.25 + 0.18) / 3, $item->averageTaxRate);
     }
 
     public function testOverallTaxAmount()

@@ -5,11 +5,6 @@ namespace Model;
 class StateTaxData
 {
     /**
-     * @var int
-     */
-    public $stateId;
-
-    /**
      * @var float Overall amount of state taxes
      */
     public $overallTaxAmount;
