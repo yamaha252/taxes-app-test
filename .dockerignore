@@ -1,5 +1,8 @@
-**/.git
 **/.DS_Store
+**/.git
+/.gitignore
+/.editorconfig
+/README.md
 /.idea
 /vendor
 /config-local.php

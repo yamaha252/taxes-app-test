@@ -17,9 +17,15 @@ The software should have the following features:
 
 **Run using Docker**
 
+Launch service
 ```bash
 $ docker-compose up -d mysql
-$ docker-compose up app-tests
+$ docker-compose up app
+```
+
+Run tests
+```bash
+$ docker-compose run app composer test
 ```
 
 **On local environment**

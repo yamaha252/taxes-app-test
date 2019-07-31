@@ -8,12 +8,13 @@ services:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
             MYSQL_DATABASE: app
 
-    app-tests:
+    app:
         build:
             context: .
-        command: composer test
         depends_on:
           - mysql
+        ports:
+          - 8080:80
         environment:
             DB_DRIVER: pdo_mysql
             DB_HOST: mysql
