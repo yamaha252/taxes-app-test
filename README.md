@@ -36,6 +36,7 @@ Check default connection params in `config.php` or set your own creating `config
 <?php
 
 return [
+    'debug' => true,
     'connection' => [
         'driver' => 'pdo_mysql',
         'host' => 'localhost',

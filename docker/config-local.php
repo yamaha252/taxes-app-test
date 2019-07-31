@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'debug' => !!getenv('APP_DEBUG'),
     'connection' => [
         'driver' => getenv('DB_DRIVER'),
         'host' => getenv('DB_HOST'),

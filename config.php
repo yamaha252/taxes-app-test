@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'debug' => true,
     'connection' => [
         'driver' => 'pdo_mysql',
         'host' => 'localhost',
