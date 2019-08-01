@@ -5,6 +5,7 @@ use GraphQL\Type\Schema;
 use GraphQL\GraphQL;
 use GraphQL\Error\FormattedError;
 use GraphQL\Error\Debug;
+use Type\Mutation;
 use Type\Query;
 
 try {
@@ -20,7 +21,8 @@ try {
     $data = json_decode($raw, true) ?: [];
 
     $schema = new Schema([
-        'query' => new Query()
+        'query' => new Query(),
+        'mutation' => new Mutation(),
     ]);
 
     $result = GraphQL::executeQuery(
