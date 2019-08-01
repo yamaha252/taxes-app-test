@@ -17,6 +17,8 @@ services:
           - 8080:80
         volumes:
           - ./docker/startup.sh:/entrypoint.d/startup.sh
+          - ./docker/nginx/location-root.conf:/opt/docker/etc/nginx/vhost.common.d/10-location-root.conf
+          - ./docker/nginx/php.conf:/opt/docker/etc/nginx/vhost.common.d/10-php.conf
         environment:
             DB_DRIVER: pdo_mysql
             DB_HOST: mysql
