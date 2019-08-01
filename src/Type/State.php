@@ -2,7 +2,6 @@
 
 namespace Type;
 
-use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -23,7 +22,7 @@ class State extends ObjectType
                 'overallTaxAmount' => Type::float(),
                 'averageTaxAmount' => Type::float(),
                 'averageTaxRate' => Type::float(),
-                'counties' => new ListOfType(Types::county()),
+                'counties' => Type::listOf(Types::county()),
             ],
             'resolveField' => function ($value, $args, $context, ResolveInfo $info) {
                 return \Resolver\State::{$info->fieldName}($value, $args, $context, $info);

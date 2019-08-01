@@ -2,8 +2,6 @@
 
 namespace Type;
 
-use GraphQL\Type\Definition\ListOfType;
-use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -20,36 +18,36 @@ class Query extends ObjectType
             'name' => 'Query',
             'fields' => [
                 'countries' => [
-                    'type' => new ListOfType(Types::country()),
+                    'type' => Type::listOf(Types::country()),
                     'description' => 'Returns subset of countries',
                 ],
                 'country' => [
                     'type' => Types::country(),
                     'description' => 'Returns a country by id',
                     'args' => [
-                        'id' => new NonNull(Type::int())
+                        'id' => Type::nonNull(Type::int())
                     ]
                 ],
                 'states' => [
-                    'type' => new ListOfType(Types::state()),
+                    'type' => Type::listOf(Types::state()),
                     'description' => 'Returns subset of states',
                 ],
                 'state' => [
                     'type' => Types::state(),
                     'description' => 'Returns a state by id',
                     'args' => [
-                        'id' => new NonNull(Type::int())
+                        'id' => Type::nonNull(Type::int())
                     ]
                 ],
                 'counties' => [
-                    'type' => new ListOfType(Types::county()),
+                    'type' => Type::listOf(Types::county()),
                     'description' => 'Returns subset of counties',
                 ],
                 'county' => [
                     'type' => Types::county(),
                     'description' => 'Returns a county by id',
                     'args' => [
-                        'id' => new NonNull(Type::int())
+                        'id' => Type::nonNull(Type::int())
                     ]
                 ],
             ],
