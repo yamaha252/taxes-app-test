@@ -1,7 +1,6 @@
-import { TestBed, async } from '@angular/core/testing';
-import { NgxsModule, Store } from '@ngxs/store';
-import { CountiesState, CountiesStateModel } from './counties.state';
-import { CountiesAction } from './counties.actions';
+import {TestBed, async} from '@angular/core/testing';
+import {NgxsModule, Store} from '@ngxs/store';
+import {CountiesState} from './counties.state';
 
 describe('Counties store', () => {
   let store: Store;
@@ -12,13 +11,8 @@ describe('Counties store', () => {
     store = TestBed.get(Store);
   }));
 
-  it('should create an action and add an item', () => {
-    const expected: CountiesStateModel = {
-      items: ['item-1']
-    };
-    store.dispatch(new CountiesAction('item-1'));
-    const actual = store.selectSnapshot(CountiesState.getState);
-    expect(actual).toEqual(expected);
+  it('should init', () => {
+    expect(store).toBeTruthy();
   });
 
 });
