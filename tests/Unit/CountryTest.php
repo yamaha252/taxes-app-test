@@ -23,7 +23,7 @@ class CountryTest extends \TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->countryRepository = $this->entityManager->getRepository(Country::class);
+        $this->countryRepository = \Connection::getEntityManager()->getRepository(Country::class);
     }
 
     public function testTaxData()

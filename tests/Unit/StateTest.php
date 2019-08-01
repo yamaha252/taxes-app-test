@@ -23,7 +23,7 @@ class StateTest extends \TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->stateRepository = $this->entityManager->getRepository(State::class);
+        $this->stateRepository = \Connection::getEntityManager()->getRepository(State::class);
     }
 
     public function testTaxData()
