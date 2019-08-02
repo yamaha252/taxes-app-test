@@ -7,6 +7,7 @@ use Connection;
 class Mutation
 {
     /**
+     * @return array
      * @throws \Doctrine\ORM\ORMException
      * @throws \Exception\UndefinedConfigParam
      */
@@ -17,6 +18,6 @@ class Mutation
             new \Fixture\State,
             new \Fixture\County,
         ]);
-        return true;
+        return [];
     }
 }

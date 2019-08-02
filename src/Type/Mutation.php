@@ -4,7 +4,6 @@ namespace Type;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQL\Type\Definition\Type;
 
 class Mutation extends ObjectType
 {
@@ -14,7 +13,8 @@ class Mutation extends ObjectType
             'name' => 'Mutation',
             'fields' => [
                 'generateData' => [
-                    'type' => Type::boolean(),
+                    'type' => Types::query(),
+                    'description' => 'Generates data and returns query',
                 ]
             ],
             'resolveField' => function ($value, $args, $context, ResolveInfo $info) {
