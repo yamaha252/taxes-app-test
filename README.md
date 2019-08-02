@@ -22,33 +22,12 @@ Launch service
 $ docker-compose up -d
 ```
 
+Web interface is available on http://localhost:8082/
+
+API is available on http://localhost:8081/
+
 Run tests
 ```bash
 $ docker-compose run api composer test
-```
-
-**On local environment**
-
-Prepare MySQL database with enabled `mysql_native_password` authentication.
-Check default connection params in `config.php` or set your own creating `config-local.php` file
-```php
-<?php
-
-return [
-    'debug' => true,
-    'connection' => [
-        'driver' => 'pdo_mysql',
-        'host' => 'localhost',
-        'port' => 3306,
-        'user' => 'root',
-        'password' => '',
-        'dbname' => 'taxes-app',
-    ]
-];
-```
-Install composer packages and run the tests.
-```bash
-$ composer install
-$ composer test
 ```
 
