@@ -14,7 +14,7 @@ services:
         depends_on:
           - mysql
         ports:
-          - 8080:80
+          - 8081:80
         volumes:
           - ./docker/startup.sh:/entrypoint.d/startup.sh
           - ./docker/nginx/location-root.conf:/opt/docker/etc/nginx/vhost.common.d/10-location-root.conf
@@ -26,3 +26,13 @@ services:
             DB_USER: root
             DB_PASSWORD:
             DB_NAME: app
+
+    app:
+        build:
+            context: frontend
+        depends_on:
+          - api
+        ports:
+          - 8082:80
+        environment:
+            API_URL: http://localhost:8081
