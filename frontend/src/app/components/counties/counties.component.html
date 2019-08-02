@@ -30,7 +30,7 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="select(row)"
+      <mat-row *matRowDef="let row; columns: displayedColumns;"
           [class.hovered]="row.hovered"
           (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
     </mat-table>
