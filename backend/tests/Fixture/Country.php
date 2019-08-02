@@ -13,9 +13,11 @@ class Country extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         $data = [
-            'country1' => 'Andorra',
-            'country2' => 'Monaco',
-            'country3' => 'Malta',
+            'country0' => 'Andorra',
+            'country1' => 'Monaco',
+            'country2' => 'Malta',
+            'country3' => 'Laos',
+            'country4' => 'Cyprus',
         ];
 
         foreach ($data as $code => $name) {

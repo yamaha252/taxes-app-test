@@ -15,8 +15,8 @@ class Mutation
     {
         Connection::applyFixtures(...[
             new \Fixture\Country,
-            new \Fixture\State,
-            new \Fixture\County,
+            new \Fixture\StateRandom,
+            new \Fixture\CountyRandom,
         ]);
         return [];
     }

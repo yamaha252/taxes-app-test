@@ -22,11 +22,11 @@ class State extends AbstractFixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $data = [
-            'country1' => [
+            'country0' => [
                 'state1' => 'State 1',
                 'state2' => 'State 2',
             ],
-            'country2' => [
+            'country1' => [
                 'state3' => 'State 3',
                 'state4' => 'State 4',
             ],
