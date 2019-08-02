@@ -12,8 +12,11 @@ The software should have the following features:
 - Output the average tax rate of the country 
 - Output the collected overall taxes of the country
 
-### Installation
+### Demo
 
+https://taxes-app.4web.dev/
+
+### Installation
 
 **Run using Docker**
 
@@ -31,3 +34,7 @@ Run tests
 $ docker-compose run api composer test
 ```
 
+### Docker images
+
+- yamaha252/taxes-app
+- yamaha252/taxes-api
