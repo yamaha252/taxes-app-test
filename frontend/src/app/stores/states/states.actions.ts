@@ -4,3 +4,7 @@ export class StatesLoadAction {
   constructor(public countryId: number) {
   }
 }
+
+export class StatesResetAction {
+  public static readonly type = '[States] Reset';
+}

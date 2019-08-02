@@ -1,36 +1,51 @@
-<mat-card>
-  <mat-card-title>Countries</mat-card-title>
-  <mat-card-content>
-    <table mat-table [dataSource]="countries$ | async" class="mat-elevation-z8">
-      <!-- Position Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID</th>
-        <td mat-cell *matCellDef="let element">{{element.id}} </td>
-      </ng-container>
+<div>
+  <div *ngIf="loading$ | async; else content">
+    <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  </div>
+</div>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name</th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+<ng-template #content>
+  <ng-container *ngIf="countries$ | async; let countries">
+    <div *ngIf="countries.length; else noData">
+      <div class="mat-title">Countries</div>
+      <mat-table [dataSource]="countries" class="mat-elevation-z1">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="averageTaxRate">
-        <th mat-header-cell *matHeaderCellDef> Average Tax Rate</th>
-        <td mat-cell *matCellDef="let element"> {{element.averageTaxRate}} </td>
-      </ng-container>
+        <ng-container matColumnDef="averageTaxRate">
+          <mat-header-cell *matHeaderCellDef> Average Tax Rate</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.averageTaxRate | percent: '0.0-2'}}
+            <span *ngIf="element.averageTaxRate === null">No data</span>
+          </mat-cell>
+        </ng-container>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="overallTaxAmount">
-        <th mat-header-cell *matHeaderCellDef> Overall Tax Amount</th>
-        <td mat-cell *matCellDef="let element"> {{element.overallTaxAmount}} </td>
-      </ng-container>
+        <ng-container matColumnDef="overallTaxAmount">
+          <mat-header-cell *matHeaderCellDef> Overall Tax Amount</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{element.overallTaxAmount | currency:'EUR'}}
+            <span *ngIf="element.overallTaxAmount === null">No data</span>
+          </mat-cell>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="select(row)"></tr>
-    </table>
-
-    <mat-progress-spinner color="primary" mode="indeterminate"
-                          *ngIf="loading$ | async"></mat-progress-spinner>
-  </mat-card-content>
-</mat-card>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row mat-ripple *matRowDef="let row; columns: displayedColumns;" (click)="select(row)"
+                 class="selectable"
+                 [class.hovered]="row.hovered"
+                 [class.highlighted]="row.id === (selectedId$ | async)"
+                 (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
+      </mat-table>
+    </div>
+  </ng-container>
+  <ng-template #noData>
+    <mat-card>
+      <mat-card-title>No data in the service</mat-card-title>
+      <mat-card-subtitle>Please, generate the data</mat-card-subtitle>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" (click)="generate()">Generate</button>
+      </mat-card-actions>
+    </mat-card>
+  </ng-template>
+</ng-template>

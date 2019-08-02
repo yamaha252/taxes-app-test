@@ -1,5 +1,5 @@
 import {State, Action, Selector, StateContext} from '@ngxs/store';
-import {CountiesCleanAction, CountiesLoadAction} from './counties.actions';
+import {CountiesLoadAction, CountiesResetAction} from './counties.actions';
 import {CountyModel} from '../../models/county';
 import {Apollo} from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -30,13 +30,15 @@ export interface CountiesStateModel {
   items: CountyModel[];
 }
 
+const countiesDefaultStateModel: CountiesStateModel = {
+  loading: false,
+  stateId: null,
+  items: [],
+};
+
 @State<CountiesStateModel>({
   name: 'counties',
-  defaults: {
-    loading: false,
-    stateId: null,
-    items: []
-  }
+  defaults: countiesDefaultStateModel,
 })
 export class CountiesState {
   constructor(private apollo: Apollo) {
@@ -62,6 +64,11 @@ export class CountiesState {
     return state.stateId;
   }
 
+  @Action(CountiesResetAction)
+  public reset(context: StateContext<CountiesStateModel>) {
+    context.setState(countiesDefaultStateModel);
+  }
+
   @Action(CountiesLoadAction)
   public async load(context: StateContext<CountiesStateModel>, {stateId}: CountiesLoadAction) {
     context.patchState({
@@ -77,12 +84,5 @@ export class CountiesState {
           items: counties,
         });
       });
-  }
-
-  @Action(CountiesCleanAction)
-  public clean(context: StateContext<CountiesStateModel>) {
-    context.patchState({
-      items: [],
-    });
   }
 }

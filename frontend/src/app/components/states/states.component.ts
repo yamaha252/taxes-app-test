@@ -9,7 +9,7 @@ import {StateModel} from '../../models/state';
 @Component({
   selector: 'app-states',
   templateUrl: './states.component.html',
-  styleUrls: ['./states.component.css']
+  styleUrls: ['./states.component.scss']
 })
 export class StatesComponent implements OnInit {
 
@@ -19,10 +19,13 @@ export class StatesComponent implements OnInit {
   @Select(StatesState.loading)
   loading$: Observable<boolean>;
 
-  @Select(CountiesState.stateId)
-  selectedId$: Observable<number>;
+  @Select(StatesState.countryId)
+  countryId$: Observable<number>;
 
-  displayedColumns: string[] = ['id', 'name', 'overallTaxAmount', 'averageTaxAmount', 'averageTaxRate'];
+  @Select(CountiesState.stateId)
+  stateId$: Observable<number>;
+
+  displayedColumns: string[] = ['name', 'overallTaxAmount', 'averageTaxAmount', 'averageTaxRate'];
 
   constructor(private store: Store) {
   }

@@ -1,3 +1,14 @@
-<app-countries></app-countries>
-<app-states></app-states>
-<app-counties></app-counties>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Tax calculation</span>
+    <span class="spacer"></span>
+    <button mat-icon-button aria-label="Generate data" matTooltip="Generate data"(click)="generate()">
+      <mat-icon>settings_backup_restore</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="wrapper">
+  <app-countries class="card"></app-countries>
+  <app-states class="card"></app-states>
+  <app-counties class="card"></app-counties>
+</div>

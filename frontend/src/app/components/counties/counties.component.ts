@@ -7,7 +7,7 @@ import {CountyModel} from '../../models/county';
 @Component({
   selector: 'app-counties',
   templateUrl: './counties.component.html',
-  styleUrls: ['./counties.component.css']
+  styleUrls: ['./counties.component.scss']
 })
 export class CountiesComponent implements OnInit {
 
@@ -17,7 +17,10 @@ export class CountiesComponent implements OnInit {
   @Select(CountiesState.loading)
   loading$: Observable<boolean>;
 
-  displayedColumns: string[] = ['id', 'name', 'taxRate', 'taxAmount'];
+  @Select(CountiesState.stateId)
+  stateId$: Observable<boolean>;
+
+  displayedColumns: string[] = ['name', 'taxRate', 'taxAmount'];
 
   constructor() {
   }

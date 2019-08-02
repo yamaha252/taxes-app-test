@@ -3,15 +3,15 @@ import {Select, Store} from '@ngxs/store';
 import {CountriesState} from '../../stores/countries/countries.state';
 import {Observable} from 'rxjs';
 import {CountryModel} from '../../models/country';
-import {CountriesLoadAction} from '../../stores/countries/countries.actions';
-import {StatesLoadAction} from '../../stores/states/states.actions';
+import {CountriesGenerateAction, CountriesLoadAction} from '../../stores/countries/countries.actions';
+import {StatesLoadAction, StatesResetAction} from '../../stores/states/states.actions';
 import {StatesState} from '../../stores/states/states.state';
-import {CountiesCleanAction} from '../../stores/counties/counties.actions';
+import {CountiesResetAction} from '../../stores/counties/counties.actions';
 
 @Component({
   selector: 'app-countries',
   templateUrl: './countries.component.html',
-  styleUrls: ['./countries.component.css']
+  styleUrls: ['./countries.component.scss']
 })
 export class CountriesComponent implements OnInit {
 
@@ -24,7 +24,7 @@ export class CountriesComponent implements OnInit {
   @Select(StatesState.countryId)
   selectedId$: Observable<number>;
 
-  displayedColumns: string[] = ['id', 'name', 'averageTaxRate', 'overallTaxAmount'];
+  displayedColumns: string[] = ['name', 'averageTaxRate', 'overallTaxAmount'];
 
   constructor(private store: Store) {
   }
@@ -35,6 +35,10 @@ export class CountriesComponent implements OnInit {
 
   select(country: CountryModel) {
     this.store.dispatch(new StatesLoadAction(country.id));
-    this.store.dispatch(new CountiesCleanAction());
+    this.store.dispatch(new CountiesResetAction);
+  }
+
+  generate() {
+    this.store.dispatch(new CountriesGenerateAction);
   }
 }

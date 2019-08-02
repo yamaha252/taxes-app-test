@@ -5,6 +5,6 @@ export class CountiesLoadAction {
   }
 }
 
-export class CountiesCleanAction {
-  public static readonly type = '[Counties] Clean items';
+export class CountiesResetAction {
+  public static readonly type = '[Counties] Reset';
 }

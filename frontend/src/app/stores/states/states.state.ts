@@ -1,5 +1,5 @@
 import {State, Action, Selector, StateContext} from '@ngxs/store';
-import {StatesLoadAction} from './states.actions';
+import {StatesLoadAction, StatesResetAction} from './states.actions';
 import {StateModel} from '../../models/state';
 import gql from 'graphql-tag';
 import {Apollo} from 'apollo-angular';
@@ -31,13 +31,15 @@ export interface StatesStateModel {
   items: StateModel[];
 }
 
+const statesDefaultStateModel: StatesStateModel = {
+  loading: false,
+  countryId: null,
+  items: [],
+};
+
 @State<StatesStateModel>({
   name: 'states',
-  defaults: {
-    loading: false,
-    countryId: null,
-    items: []
-  }
+  defaults: statesDefaultStateModel,
 })
 export class StatesState {
   constructor(private apollo: Apollo) {
@@ -63,6 +65,11 @@ export class StatesState {
     return state.countryId;
   }
 
+  @Action(StatesResetAction)
+  public reset(context: StateContext<StatesStateModel>) {
+    context.setState(statesDefaultStateModel);
+  }
+
   @Action(StatesLoadAction)
   public async load(context: StateContext<StatesStateModel>, {countryId}: StatesLoadAction) {
     context.patchState({
@@ -79,4 +86,6 @@ export class StatesState {
         });
       });
   }
+
+
 }

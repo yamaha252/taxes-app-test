@@ -1,9 +1,9 @@
 import {State, Action, Selector, StateContext} from '@ngxs/store';
-import {CountriesLoadAction} from './countries.actions';
+import {CountriesGenerateAction, CountriesLoadAction} from './countries.actions';
 import {CountryModel} from '../../models/country';
 import gql from 'graphql-tag';
 import {Apollo} from 'apollo-angular';
-import {map} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 
 const countriesQuery = gql`
   {
@@ -18,6 +18,23 @@ const countriesQuery = gql`
 
 interface CountriesQueryResponse {
   countries: CountryModel[]
+}
+
+const generateMutation = gql`
+  mutation {
+    generateData {
+      countries {
+        id
+        name
+        averageTaxRate
+        overallTaxAmount
+      }
+    }
+  }
+`;
+
+interface GenerateQueryResponse {
+  generateData: CountriesQueryResponse
 }
 
 export interface CountriesStateModel {
@@ -57,9 +74,30 @@ export class CountriesState {
       loading: true,
     });
     await this.apollo.query<CountriesQueryResponse>({query: countriesQuery})
-      .pipe(map(({data}) => data.countries))
-      .toPromise()
-      .then(countries => {
+      .pipe(
+        map(({data}) => data.countries),
+        take(1)
+      )
+      .subscribe(countries => {
+        context.patchState({
+          loading: false,
+          items: countries,
+        });
+      });
+  }
+
+  @Action(CountriesGenerateAction)
+  public async generate(context: StateContext<CountriesStateModel>) {
+    context.patchState({
+      loading: true,
+    });
+    await this.apollo.mutate<GenerateQueryResponse>({mutation: generateMutation})
+      .pipe(
+        map(({data}) => data.generateData),
+        map(({countries}) => countries),
+        take(1),
+      )
+      .subscribe(countries => {
         context.patchState({
           loading: false,
           items: countries,
