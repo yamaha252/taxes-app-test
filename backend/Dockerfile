@@ -17,3 +17,6 @@ RUN composer install
 COPY . .
 
 COPY docker/config-local.php ./config-local.php
+COPY docker/startup.sh /entrypoint.d/startup.sh
+COPY docker/nginx/location-root.conf /opt/docker/etc/nginx/vhost.common.d/10-location-root.conf
+COPY docker/nginx/location-php.conf /opt/docker/etc/nginx/vhost.common.d/10-php.conf

@@ -15,10 +15,6 @@ services:
           - mysql
         ports:
           - 8081:80
-        volumes:
-          - ./backend/docker/startup.sh:/entrypoint.d/startup.sh
-          - ./backend/docker/nginx/location-root.conf:/opt/docker/etc/nginx/vhost.common.d/10-location-root.conf
-          - ./backend/docker/nginx/location-php.conf:/opt/docker/etc/nginx/vhost.common.d/10-php.conf
         environment:
             DB_DRIVER: pdo_mysql
             DB_HOST: mysql
