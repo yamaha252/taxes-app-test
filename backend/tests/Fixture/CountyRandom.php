@@ -29,6 +29,9 @@ class CountyRandom extends AbstractFixture implements DependentFixtureInterface
         $manager->flush();
     }
 
+    /**
+     * @return \Generator<\Model\State>
+     */
     protected function generator()
     {
         /** @var \Model\State $state */
@@ -45,10 +48,16 @@ class CountyRandom extends AbstractFixture implements DependentFixtureInterface
         }
     }
 
+    /**
+     * @param int $num
+     * @return \Model\State|null
+     */
     protected function getState(int $num)
     {
         try {
-            return $this->getReference("state$num");
+            /** @var \Model\State $model */
+            $model = $this->getReference("state$num");
+            return $model;
         } catch (\OutOfBoundsException $e) {
             return null;
         }

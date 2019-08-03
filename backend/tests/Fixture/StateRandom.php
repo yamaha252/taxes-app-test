@@ -32,6 +32,9 @@ class StateRandom extends AbstractFixture implements DependentFixtureInterface
         $manager->flush();
     }
 
+    /**
+     * @return \Generator<\Model\Country>
+     */
     protected function generator()
     {
         /** @var \Model\Country $country */
@@ -46,10 +49,16 @@ class StateRandom extends AbstractFixture implements DependentFixtureInterface
         }
     }
 
+    /**
+     * @param int $num
+     * @return \Model\Country|null
+     */
     protected function getCountry(int $num)
     {
         try {
-            return $this->getReference("country$num");
+            /** @var \Model\Country $model */
+            $model = $this->getReference("country$num");
+            return $model;
         } catch (\OutOfBoundsException $e) {
             return null;
         }
