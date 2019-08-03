@@ -34,9 +34,8 @@ class StateRandom extends AbstractFixture implements DependentFixtureInterface
 
     protected function generator()
     {
-        $countryNum = 0;
-        while ($country = $this->getCountry($countryNum)) {
-            /** @var \Model\Country $country */
+        /** @var \Model\Country $country */
+        for ($i = 0; $country = $this->getCountry($i); $i++) {
             foreach (range(0, rand(0, static::MAX)) as $stateNum) {
                 $stateNum++;
                 $state = new \Model\State;
@@ -44,7 +43,6 @@ class StateRandom extends AbstractFixture implements DependentFixtureInterface
                 $state->setCountry($country);
                 yield $state;
             }
-            $countryNum++;
         }
     }
 

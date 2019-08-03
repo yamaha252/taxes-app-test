@@ -31,9 +31,8 @@ class CountyRandom extends AbstractFixture implements DependentFixtureInterface
 
     protected function generator()
     {
-        $stateNum = 0;
-        while ($state = $this->getState($stateNum)) {
-            /** @var \Model\State $state */
+        /** @var \Model\State $state */
+        for ($i = 0; $state = $this->getState($i); $i++) {
             foreach (range(0, rand(0, static::MAX)) as $countyNum) {
                 $countyNum++;
                 $county = new \Model\County;
@@ -43,7 +42,6 @@ class CountyRandom extends AbstractFixture implements DependentFixtureInterface
                 $county->setState($state);
                 yield $county;
             }
-            $stateNum++;
         }
     }
 
