@@ -39,7 +39,7 @@ class CountyRandom extends AbstractFixture implements DependentFixtureInterface
                 $county = new \Model\County;
                 $county->setName("County $countyNum");
                 $county->setTaxRate(rand(0, 45) / 100);
-                $county->setTaxAmount(rand(0, 10000));
+                $county->setTaxAmount(rand(100, 1000000) / 100);
                 $county->setState($state);
                 yield $county;
             }
