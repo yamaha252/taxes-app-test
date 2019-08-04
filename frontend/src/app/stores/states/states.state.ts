@@ -22,7 +22,7 @@ const countryQuery = gql`
 interface CountryQueryResponse {
   country: {
     states: StateModel[];
-  }
+  };
 }
 
 export interface StatesStateModel {
@@ -76,16 +76,19 @@ export class StatesState {
       countryId,
       loading: true,
     });
-    await this.apollo.query<CountryQueryResponse>({query: countryQuery, variables: {countryId}})
-      .pipe(map(({data}) => data.country.states))
-      .toPromise()
-      .then(states => {
-        context.patchState({
-          loading: false,
-          items: states,
-        });
+
+    try {
+      const result = await this.apollo.query<CountryQueryResponse>({query: countryQuery, variables: {countryId}})
+        .pipe(map(({data}) => data.country.states))
+        .toPromise();
+      context.patchState({
+        loading: false,
+        items: result,
       });
+    } catch (e) {
+      context.patchState({
+        loading: false,
+      });
+    }
   }
-
-
 }

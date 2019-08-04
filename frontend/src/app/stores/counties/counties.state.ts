@@ -21,7 +21,7 @@ const stateQuery = gql`
 interface StateQueryResponse {
   state: {
     counties: CountyModel[];
-  }
+  };
 }
 
 export interface CountiesStateModel {
@@ -75,14 +75,19 @@ export class CountiesState {
       stateId,
       loading: true,
     });
-    await this.apollo.query<StateQueryResponse>({query: stateQuery, variables: {stateId}})
-      .pipe(map(({data}) => data.state.counties))
-      .toPromise()
-      .then(counties => {
-        context.patchState({
-          loading: false,
-          items: counties,
-        });
+
+    try {
+      const result = await this.apollo.query<StateQueryResponse>({query: stateQuery, variables: {stateId}})
+        .pipe(map(({data}) => data.state.counties))
+        .toPromise();
+      context.patchState({
+        loading: false,
+        items: result,
       });
+    } catch (e) {
+      context.patchState({
+        loading: false,
+      });
+    }
   }
 }

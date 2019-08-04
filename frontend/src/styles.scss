@@ -18,6 +18,7 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent);
 @include mat-ripple-theme($candy-app-theme);
 @include mat-tooltip-theme($candy-app-theme);
 @include mat-dialog-theme($candy-app-theme);
+@include mat-snack-bar-theme($candy-app-theme);
 
 html, body {
   height: 100%;

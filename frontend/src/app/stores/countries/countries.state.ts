@@ -17,7 +17,7 @@ const countriesQuery = gql`
 `;
 
 interface CountriesQueryResponse {
-  countries: CountryModel[]
+  countries: CountryModel[];
 }
 
 const generateMutation = gql`
@@ -34,7 +34,7 @@ const generateMutation = gql`
 `;
 
 interface GenerateQueryResponse {
-  generateData: CountriesQueryResponse
+  generateData: CountriesQueryResponse;
 }
 
 export interface CountriesStateModel {
@@ -73,17 +73,20 @@ export class CountriesState {
     context.patchState({
       loading: true,
     });
-    await this.apollo.query<CountriesQueryResponse>({query: countriesQuery})
-      .pipe(
-        map(({data}) => data.countries),
-        take(1)
-      )
-      .subscribe(countries => {
-        context.patchState({
-          loading: false,
-          items: countries,
-        });
+
+    try {
+      const result = await this.apollo.query<CountriesQueryResponse>({query: countriesQuery})
+        .pipe(map(({data}) => data.countries),)
+        .toPromise();
+      context.patchState({
+        loading: false,
+        items: result,
       });
+    } catch (err) {
+      context.patchState({
+        loading: false,
+      });
+    }
   }
 
   @Action(CountriesGenerateAction)
@@ -91,17 +94,21 @@ export class CountriesState {
     context.patchState({
       loading: true,
     });
-    await this.apollo.mutate<GenerateQueryResponse>({mutation: generateMutation})
-      .pipe(
-        map(({data}) => data.generateData),
-        map(({countries}) => countries),
-        take(1),
-      )
-      .subscribe(countries => {
-        context.patchState({
-          loading: false,
-          items: countries,
-        });
+
+    try {
+      const result = await this.apollo.mutate<GenerateQueryResponse>({mutation: generateMutation})
+        .pipe(
+          map(({data}) => data.generateData),
+          map(({countries}) => countries),
+        ).toPromise();
+      context.patchState({
+        loading: false,
+        items: result,
       });
+    } catch (err) {
+      context.patchState({
+        loading: false,
+      });
+    }
   }
 }
