@@ -38,10 +38,14 @@ class CountyRandom extends AbstractFixture implements DependentFixtureInterface
         for ($i = 0; $state = $this->getState($i); $i++) {
             foreach (range(0, rand(0, static::MAX)) as $countyNum) {
                 $countyNum++;
+
+                $taxRate = rand(0, 45) / 100;
+                $taxAmount = $taxRate > 0 ? rand(100, 1000000) / 100 : 0;
+
                 $county = new \Model\County;
                 $county->setName("County $countyNum");
-                $county->setTaxRate(rand(0, 45) / 100);
-                $county->setTaxAmount(rand(100, 1000000) / 100);
+                $county->setTaxRate($taxRate);
+                $county->setTaxAmount($taxAmount);
                 $county->setState($state);
                 yield $county;
             }
